@@ -107,3 +107,63 @@ class Solution {
         return ans;
     }
 }
+
+506. 相对名次
+        给出 N 名运动员的成绩，找出他们的相对名次并授予前三名对应的奖牌。前三名运动员将会被分别授予 “金牌”，“银牌” 和“ 铜牌”（"Gold Medal", "Silver Medal", "Bronze Medal"）。
+        (注：分数越高的选手，排名越靠前。)
+        示例 1:
+        输入: [5, 4, 3, 2, 1]
+        输出: ["Gold Medal", "Silver Medal", "Bronze Medal", "4", "5"]
+        解释: 前三名运动员的成绩为前三高的，因此将会分别被授予 “金牌”，“银牌”和“铜牌” ("Gold Medal", "Silver Medal" and "Bronze Medal").
+        余下的两名运动员，我们只需要通过他们的成绩计算将其相对名次即可。
+思路：
+        1.排序，并且用hashmap来记录成绩数组的名次
+        2.遍历赋值
+题解：
+class Solution {
+    public String[] findRelativeRanks(int[] nums) {
+        int len = nums.length;
+        int [] temp = nums.clone();
+        Arrays.sort(temp);
+        Map<Integer,Integer> map = new HashMap<>(nums.length);
+        for(int i = 0;i < len;i++){
+            map.put(temp[i],i);
+        }
+        String [] ans = new String[len];
+        for(int i = 0;i < len;i++){
+            int index = map.get(nums[i]);
+            if(index == len - 1)
+                ans[i] = "Gold Medal";
+            else if(index == len - 2)
+                ans[i] = "Silver Medal";
+            else if(index == len - 3)
+                ans[i] = "Bronze Medal";
+            else {
+                ans[i] = String.valueOf(len - index);
+            }
+        }
+        return ans;
+    }
+}
+
+509. 斐波那契数
+    斐波那契数，通常用 F(n) 表示，形成的序列称为斐波那契数列。该数列由 0 和 1 开始，后面的每一项数字都是前面两项数字的和。也就是：
+    F(0) = 0,   F(1) = 1
+    F(N) = F(N - 1) + F(N - 2), 其中 N > 1.
+    给定 N，计算 F(N)。
+    示例 1：
+    输入：2
+    输出：1
+    解释：F(2) = F(1) + F(0) = 1 + 0 = 1.
+思路：
+    检查整数 N，如果 N 小于等于 1，则返回 N。
+    否则，通过递归关系：Fn=Fn−1+Fn−2F_{n} = F_{n-1} + F_{n-2}Fn​=Fn−1​+Fn−2​ 调用自身。
+    直到所有计算返回结果得到答案。
+题解：
+class Solution {
+    public int fib(int N) {
+        if(N <= 1)
+            return N;
+        return fib(N - 1) + fib(N - 2);
+    }
+}
